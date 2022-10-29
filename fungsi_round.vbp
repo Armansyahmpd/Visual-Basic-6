@@ -1,0 +1,18 @@
+'Pembuatan Fungsi Round -2
+'Sebagai Active X
+'Dengan Visual Basic 6
+'Untuk di-integrasikan dengan Classic ASP
+'Copyright 2006, Armansyah
+
+Public Function FungsiRound(angkanya As Double, Optional letakdesimalnya As Integer) As Double
+
+Membuat fungsi Round -2 seperti di excel & Clipper
+
+'Sintaksis : x = FungsiRound(test, -2)
+
+Dim nilainya As Double
+nilainya = 10 ^ letakdesimalnya
+
+FungsiRound = Int(CDbl(angkanya * nilainya + 0.5)) / nilainya
+
+End Function
