@@ -1,0 +1,13 @@
+Private Sub Command1_Click()
+   Command1.Enabled = False
+   Command2.Enabled = True
+End Sub
+
+Private Sub Command2_Click()
+   Command2.Enabled = False
+   Command1.Enabled = True
+End Sub
+
+Private Sub Form_Load()
+   Command2.Enabled = False
+End Sub
