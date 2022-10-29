@@ -1,0 +1,8 @@
+Memanggil file rtf dari VB6 :
+
+Private Sub Form_Load()
+
+
+RichTextBox1.LoadFile "Armansyah.rtf"
+
+End Sub
