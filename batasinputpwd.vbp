@@ -1,0 +1,53 @@
+Private Sub Command1_Click() 
+Dim flag As Boolean 
+Dim xText 
+Dim myconn As ADODB.Connection 
+Dim myrs As ADODB.Recordset 
+Dim mydb_file As String 
+Dim mysqlnya As String 
+
+'Get the data 
+  mydb_file = App.path 
+If Right$(mydb_file, 1) <> "\" Then mydb_file = mydb_file & "\Database\" mydb_file = mydb_file & "db_login.mdb" 
+  
+'Open a connection
+  Set myconn = New ADODB.Connection 
+    myconn.ConnectionString = _ "Provider=Microsoft.Jet.OLEDB.4.0;" & _ 
+    "Data Source=" & mydb_file & ";" & _ 
+    "Persist Security Info=False" 
+    myconn.Open mysqlnya = "SELECT * FROM Tabel_Armansyah" 
+    Set myrs = myconn.Execute(mysqlnya, , adCmdText) flag = False If txtPassword.Text = "" Then 
+    MsgBox "Password tidak boleh kosong !!", vbOKOnly + vbCritical, _ 
+           "Peringatan : Anda belum memasukkan password " txtPassword.SetFocus flag = True 
+ End If 
+   
+ Dim EnPas As String 
+     EnPas = Encrypt(txtPassword.Text) 
+     If Combo1.ListIndex = 0 Then 
+     If Combo1 = myrs![UserName] And EnPas = myrs![Password] Then Unload Me 
+        flag = True gblnPriv = True 
+ 
+ frmprogressbar.Show 
+ End If 
+      Else myrs.MoveNext 
+ If Combo1 = myrs![UserName] And EnPas = myrs![Password] Then Unload Me flag = True 
+    gblnPriv = False 
+    frmprogressbar.Show 
+End If 
+
+myrs.MoveFirst 
+End If 
+
+If flag = False Then 
+   hitungan = hitungan + 1 
+If hitungan = 4 Then 
+    End 
+Else 
+  xText = "Sisa kesempatan anda hanya " + Str(4 - hitungan) + " x lagi" 
+  
+If hitungan = 3 Then xText = "Sekali ini merupakan kesempatan anda yang terakhir !!" 
+End If 
+  MsgBox " Password Salah ... Akses ditolak!!" & vbCrLf & _ xText, vbOKOnly + vbCritical, "Peringatan : Terjadi kesalahan" txtPassword.Text = "" 
+End If 
+End If 
+End Sub
