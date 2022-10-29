@@ -1,0 +1,98 @@
+Dim lpBuff As String * 25
+Dim ret As Long ', username As String
+Dim namauser As String
+Dim GetCurrentUser As String
+
+ret = GetUserName(lpBuff, 25)
+GetCurrentUser = Left(lpBuff, InStr(lpBuff, Chr(0)) - 1)
+
+computer_name = Space$(256)
+length = Len(computer_name)
+GetComputerName computer_name, length
+computer_name = Left$(computer_name, length)
+
+
+
+Dim fsoLog As New FileSystemObject
+Dim oTS As TextStream
+
+Dim PesanLog As Integer
+Dim Teksnya, Teksnya2, Teksnya3 As String
+
+Teksnya = GetCurrentUser
+Teksnya2 = computer_name
+
+Dim WaktuSekarang
+Dim FormatWaktuSekarang
+WaktuSekarang = Now()
+FormatWaktuSekarang = FormatDateTime(WaktuSekarang, 3)
+
+Teksnya3 = FormatTanggal(Now()) & " " & FormatWaktuSekarang
+
+
+Dim CekFolderFileLog As String
+Dim CekFileLog As String
+CekFolderFileLog = App.Path
+
+If Right$(CekFolderFileLog, 1) <> "\" Then CekFolderFileLog = CekFolderFileLog & "\Log"
+If Not FileExist(CekFolderFileLog) Then
+fsoLog.CreateFolder "Log"
+End If
+
+CekFolderFileLog = CekFolderFileLog & "\" & "PC-BLKM.Arman"
+
+If Not FileExist(CekFolderFileLog) Then
+
+Set oTS = fsoLog.OpenTextFile(CekFolderFileLog, ForWriting, True)
+
+
+
+oTS.WriteLine "#######################################"
+oTS.WriteLine "NAMA FILE : PC-BLKM.Arman "
+oTS.WriteLine "Dibuat Otomatis saat PC-BLKM diakses "
+oTS.WriteLine ""
+oTS.WriteLine "Nama User merujuk pada login user pada Windows"
+oTS.WriteLine "ID Komputer : Mengacu pada ID System "
+oTS.WriteLine "Diprogram oleh : armansyah@gmail.com "
+oTS.WriteLine ""
+oTS.WriteLine "#######################################"
+oTS.WriteLine ""
+oTS.Write "Waktu Login : "
+oTS.WriteLine Teksnya3
+oTS.Write "Nama User yang login : "
+oTS.Write Teksnya
+oTS.WriteLine ""
+oTS.Write "Id Komputer : "
+oTS.Write Teksnya2
+oTS.WriteLine ""
+oTS.Write "Total PC-BLKM dijalankan : "
+oTS.WriteLine Format$(RunTimes) & " Kali"
+oTS.WriteLine "-------------------------------------------"
+oTS.Close
+
+Set oTS = Nothing
+
+Else
+
+
+Set oTS = fsoLog.OpenTextFile(CekFolderFileLog, ForAppending, True)
+
+oTS.WriteLine ""
+oTS.Write "Waktu Login : "
+oTS.WriteLine Teksnya3
+oTS.Write "Nama User yang login : "
+oTS.Write Teksnya
+oTS.WriteLine ""
+oTS.Write "Id Komputer : "
+oTS.Write Teksnya2
+oTS.WriteLine ""
+oTS.Write "Total PC-BLKM dijalankan : "
+oTS.WriteLine Format$(RunTimes) & " Kali"
+oTS.WriteLine "-------------------------------------------"
+oTS.Close
+
+Set oTS = Nothing
+
+
+
+End If
