@@ -1,0 +1,15 @@
+Private Sub Command1_Click()
+Dim a, b, c, d, e As Double
+
+a = Val(Text1.Text)
+b = Val(Text2.Text)
+c = Val(Text2.Text)
+
+d = (a + b + c) * 100
+e = (a + b + c)
+
+Text5.Text = e
+Text4.Text = d
+
+
+End Sub
